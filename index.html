@@ -1,1 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quote Cal 36 test</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            overflow-y: auto;
+            max-height: 90%;
+            width: 100vw;
+        }
+
+        select, input, button {
+            margin: 5px 0; /* Margin for spacing out elements */
+            width: 80%; /* Set a width or max-width for better control */
+            max-width: 300px; /* You can set a max-width if needed */
+        }
+        #response {
+            margin-top: 10px;
+            text-align: center;
+            border: 1px solid #ccc; /* Add a border */
+            padding: 10px; /* Add some padding */
+            box-shadow: 0px 0px 5px #ccc; /* Optional: Add a shadow for better visibility */
+            width: 80%; /* Control the width of the box */
+            max-width: 400px; /* Set a maximum width if required */
+            overflow: visible; 
+        }
+        #totalPrice {
+            margin-top: 10px;
+            text-align: center;
+            border: 1px solid #ccc; /* Add a border */
+            padding: 10px; /* Add some padding */
+            box-shadow: 0px 0px 5px #ccc; /* Optional: Add a shadow for better visibility */
+            width: 80%; /* Control the width of the box */
+            max-width: 300px; /* Set a maximum width if required */
+            overflow: visible; /* To handle overflow of content */
+        }
+        #discountedPrice {
+            margin-top: 10px;
+            text-align: center;
+            border: 1px solid #ccc; /* Add a border */
+            padding: 10px; /* Add some padding */
+            box-shadow: 0px 0px 5px #ccc; /* Optional: Add a shadow for better visibility */
+            width: 80%; /* Control the width of the box */
+            max-width: 300px; /* Set a maximum width if required */
+            overflow: visible; /* To handle overflow of content */
+        }
+
+    //    #response {
+    //        margin-top: 10px;
+    //        text-align: center;
+    //    }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+
+</head>
+
+    
+<body>
+    <div class="container"> <!-- Container to hold the content -->
+    <p> Please select product and group, input height and width of your window, number of your window with same blinds </p>
+    <select id="menu1"></select>
+    <select id="menu2"></select>
+    <input type="text" id="input3" placeholder="Enter width" />
+    <input type="text" id="input4" placeholder="Enter height" />
+    <input type="text" id="input5" placeholder="Enter number" />
+
+    <div id="additionalMenus" style="display: none;">
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+        <select id="menu3" style="margin-right: 10px;"></select>
+        <input type="text" id="input6" placeholder="Enter width" />
+    </div>
+    </div>
+
+    <button onclick="sendDataToLambda()">Get the price</button>
+    <p id="response" ></p>
+    <p> Start a new selection if you have more window </p>
+    <button onclick="startNextSelection()">Add another selection</button>
+    <p> </p>
+    <p> _______________________________________________ </p>
+    <p> Get the total price if you complete all inputs </p>
+    <button onclick="sumPrices()">Sum all prices</button>
+    <div id="responsexy"></div>
+    <div id="totalPrice">Total price: </div>
+    <p> Please input the discount (e.g., input 10 if the discount is 10% off) </p>
+    <input type="text" id="discountInput" placeholder="Enter discount" />
+    <button onclick="calculateDiscountedPrice()">Get the discounted price</button>
+    <div id="discountedPrice"></div>
+    <p> </p>
+    <button onclick="generatePDF()">Generate PDF</button>
+    <p> </p>
+    <p> _______________________________________________ </p>
+    <button onclick="resetForm()">Clear all selection and price</button>
+    </div>
+
+
+
+
+
+
+
+
+        
+</script>
+</body>
+</html>
+
 
