@@ -16,6 +16,63 @@
 		<link href="all.css" rel="stylesheet">
 		<link href="themify-icons.min.css" rel="stylesheet">
 
+    <title> </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .slider-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        .slide img {
+            max-width: 40%;
+            height: auto;
+        }
+        .slide .text {
+            flex: 1;
+            padding-left: 20px;
+        }
+        .nav-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .nav-buttons button {
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+		font-size: 24px;
+        }
+    </style>
+
+
+	
+		
 	</head>
 
     
@@ -228,49 +285,108 @@
 
 		
 
-		<!-- case -->
-			<div class="container">
-				<div class="row">
-        				<div class="col-12 text-center" style="padding: 40px 20px;">
-            					<p class="font-weight-light" style="font-size: 28px; color: #333333;">Case Studies</p>
-        				</div>
-    				</div>
-    
-    				<div class="row" style="margin-top: 10px;">
-					<div class="col-12 col-md-6" style="padding: 20px;">
-            					<img src="case1.jpg" alt="IntegrityScan" style="width: 200px; height: auto; margin-bottom: 20px;">
+<!-- case -->	
+<div class="container">
+<div class="row">
+	<div class="col-12 text-center" style="padding: 40px 20px;">
+            	<p class="font-weight-light" style="font-size: 28px; color: #333333;">Case Studies</p>
+        </div>
+</div>
+<div class="row" style="margin-top: 10px;">
+<div class="slider-container">
+    <div class="slider">
+        <div class="slide">
+            <img src="case1.jpg" alt="IntegrityScan" style="width: 200px; height: auto; margin-bottom: 20px;">
+            <div class="text">
             					<p>
 		    					<span class="font-weight-bold">IntegrityScan: Advanced Neural Network Audit for Data Fabrication Detection </span> 
 		    					<span class="font-weight-light">Unleash the power of machine learning to uncover and report data anomalies, ensuring transparency and accuracy in every timestamp over five years of comprehensive data collection.</span>
 	    					</p>
-        				</div>
-        				<div class="col-12 col-md-6" style="padding: 20px;">
-            					<img src="case2.jpg" alt="Process Precision" style="width: 200px; height: auto; margin-bottom: 20px;">
+            </div>
+        </div>
+        <div class="slide">
+            <img src="case2.jpg" alt="Process Precision" style="width: 200px; height: auto; margin-bottom: 20px;">
+            <div class="text">
             					<p>
 		    					<span class="font-weight-bold">Process Precision: Enhancing Hospital Efficiency with Advanced Process Models </span> 
 		    					<span class="font-weight-light">By developing a medical procedure process model using machine learning algorithms, we helped a hospital enhance management efficiency by 15%, streamlining operations and improving patient care.</span>
 	    					</p>
-        				</div>
-    				</div>
-
-    				<div class="row">
-        				<div class="col-12 col-md-6" style="padding: 20px;">
-            					<img src="case3.jpg" alt="Biology Publication" style="width: 200px; height: auto; margin-bottom: 20px;">
+            </div>
+        </div>
+        <div class="slide">
+            <img src="case3.jpg" alt="Biology Publication" style="width: 200px; height: auto; margin-bottom: 20px;">
+            <div class="text">
             					<p>
 		    					<span class="font-weight-bold">Biology Publication: Seamless Pathway to Prestigious Publication </span>
 		    					<span class="font-weight-light">We leveraged expertise in bioinformatics and biostatistics to guide an academic professional from data analysis to successful publication in a prestigious journal.</span>		    
 	    					</p>
-        				</div>
-        				<div class="col-12 col-md-6" style="padding: 20px;">
-            					<img src="case4.jpg" alt="Insight Engine" style="width: 200px; height: auto; margin-bottom: 20px;">
-            					<p>
-		    					<span class="font-weight-bold">Insight Engine: Driving Market Exploration with Thinktank Intelligence </span>
-		    					<span class="font-weight-light">We equipped both academia and industry clients with think tank products, enabling them to explore and assess new markets for product expansion.</span>
-	    					</p>
-        				</div>
-    				</div>
-			</div>
-		<!-- end case--> 
+            </div>
+        </div>
+    </div>
+    <div class="nav-buttons">
+        <button id="prev">&#9664;</button>
+        <button id="next">&#9654;</button>
+    </div>
+</div>
+</div>
+</div>
+
+	
+<script>
+    const slider = document.querySelector('.slider');
+    const slides = document.querySelectorAll('.slide');
+    const prevButton = document.getElementById('prev');
+    const nextButton = document.getElementById('next');
+    let currentIndex = 1;
+
+
+    // Clone first and last slides for infinite effect
+    const firstSlideClone = slides[0].cloneNode(true);
+    const lastSlideClone = slides[slides.length - 1].cloneNode(true);
+    slider.appendChild(firstSlideClone);
+    slider.insertBefore(lastSlideClone, slides[0]);
+
+    const totalSlides = slides.length + 2; // Including clones
+    let offset = -100; // Initial offset to show first slide (not the clone)
+    slider.style.transform = `translateX(${offset}%)`;
+
+
+    prevButton.addEventListener('click', () => {
+        currentIndex--;
+        offset = -100 * currentIndex;
+        slider.style.transform = `translateX(${offset}%)`;
+        slider.style.transition = 'transform 0.5s ease';
+    });
+
+    nextButton.addEventListener('click', () => {
+        currentIndex++;
+        offset = -100 * currentIndex;
+        slider.style.transform = `translateX(${offset}%)`;
+        slider.style.transition = 'transform 0.5s ease';
+    });
+
+    slider.addEventListener('transitionend', () => {
+        if (currentIndex === 0) {
+            slider.style.transition = 'none';
+            currentIndex = slides.length;
+            offset = -100 * currentIndex;
+            slider.style.transform = `translateX(${offset}%)`;
+            setTimeout(() => {
+                slider.style.transition = 'transform 0.5s ease';
+            }, 50);
+        } else if (currentIndex === slides.length + 1) {
+            slider.style.transition = 'none';
+            currentIndex = 1;
+            offset = -100 * currentIndex;
+            slider.style.transform = `translateX(${offset}%)`;
+            setTimeout(() => {
+                slider.style.transition = 'transform 0.5s ease';
+            }, 50);
+        }
+    });
+	slider.style.transform = `translateX(${offset}%)`;
+</script>
+<!-- end case-->
 
 		
 
