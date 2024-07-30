@@ -327,41 +327,38 @@
     let offset = -100; // Initial offset to show first slide (not the clone)
     slider.style.transform = `translateX(${offset}%)`;
 
+
     prevButton.addEventListener('click', () => {
-        if (currentIndex <= 0) {
-            currentIndex = slides.length - 1; // Jump to the last original slide
-            offset = -100 * (currentIndex + 1); // Adjust for clone slide
-            slider.style.transition = 'none'; // Disable transition for jump
-            slider.style.transform = `translateX(${offset}%)`;
-            setTimeout(() => {
-                slider.style.transition = 'transform 0.5s ease'; // Re-enable transition
-                currentIndex--;
-                offset = -100 * currentIndex;
-                slider.style.transform = `translateX(${offset}%)`;
-            }, 50);
-        } else {
-            currentIndex--;
-            offset = -100 * currentIndex;
-            slider.style.transform = `translateX(${offset}%)`;
-        }
+        currentIndex--;
+        offset = -100 * currentIndex;
+        slider.style.transform = `translateX(${offset}%)`;
+        slider.style.transition = 'transform 0.75s ease';
     });
 
     nextButton.addEventListener('click', () => {
-        if (currentIndex >= slides.length - 1) {
-            currentIndex = 0; // Jump to the first original slide
-            offset = -100; // Adjust for clone slide
-            slider.style.transition = 'none'; // Disable transition for jump
+        currentIndex++;
+        offset = -100 * currentIndex;
+        slider.style.transform = `translateX(${offset}%)`;
+        slider.style.transition = 'transform 0.75s ease';
+    });
+
+    slider.addEventListener('transitionend', () => {
+        if (currentIndex === 0) {
+            slider.style.transition = 'none';
+            currentIndex = slides.length;
+            offset = -100 * currentIndex;
             slider.style.transform = `translateX(${offset}%)`;
             setTimeout(() => {
-                slider.style.transition = 'transform 0.5s ease'; // Re-enable transition
-                currentIndex++;
-                offset = -100 * (currentIndex + 1);
-                slider.style.transform = `translateX(${offset}%)`;
+                slider.style.transition = 'transform 0.75s ease';
             }, 50);
-        } else {
-            currentIndex++;
-            offset = -100 * (currentIndex + 1);
+        } else if (currentIndex === slides.length + 1) {
+            slider.style.transition = 'none';
+            currentIndex = 1;
+            offset = -100 * currentIndex;
             slider.style.transform = `translateX(${offset}%)`;
+            setTimeout(() => {
+                slider.style.transition = 'transform 0.75s ease';
+            }, 50);
         }
     });
 	slider.style.transform = `translateX(${offset}%)`;
