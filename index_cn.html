@@ -65,6 +65,7 @@
             border: none;
             padding: 10px;
             cursor: pointer;
+		font-size: 24px;
         }
     </style>
 
@@ -273,8 +274,10 @@
 			</div>
 		<!-- end Community section 2-->
 
-	
 
+
+	
+<div class="container">
 <div class="slider-container">
     <div class="slider">
         <div class="slide">
@@ -300,9 +303,10 @@
         </div>
     </div>
     <div class="nav-buttons">
-        <button id="prev">⬅️</button>
-        <button id="next">➡️</button>
+        <button id="prev">&#9664;</button>
+        <button id="next">&#9654;</button>
     </div>
+</div>
 </div>
 
 <script>
@@ -312,19 +316,54 @@
     const nextButton = document.getElementById('next');
     let currentIndex = 0;
 
+
+    // Clone first and last slides for infinite effect
+    const firstSlideClone = slides[0].cloneNode(true);
+    const lastSlideClone = slides[slides.length - 1].cloneNode(true);
+    slider.appendChild(firstSlideClone);
+    slider.insertBefore(lastSlideClone, slides[0]);
+
+    const totalSlides = slides.length + 2; // Including clones
+    let offset = -100; // Initial offset to show first slide (not the clone)
+    slider.style.transform = `translateX(${offset}%)`;
+
     prevButton.addEventListener('click', () => {
-        currentIndex = (currentIndex > 0) ? currentIndex - 1 : slides.length - 1;
-        updateSliderPosition();
+        if (currentIndex <= 0) {
+            currentIndex = slides.length; // Jump to the last original slide
+            offset = -100 * (currentIndex + 1); // Adjust for clone slide
+            slider.style.transition = 'none'; // Disable transition for jump
+            slider.style.transform = `translateX(${offset}%)`;
+            setTimeout(() => {
+                slider.style.transition = 'transform 0.5s ease'; // Re-enable transition
+                currentIndex--;
+                offset = -100 * currentIndex;
+                slider.style.transform = `translateX(${offset}%)`;
+            }, 50);
+        } else {
+            currentIndex--;
+            offset = -100 * currentIndex;
+            slider.style.transform = `translateX(${offset}%)`;
+        }
     });
 
     nextButton.addEventListener('click', () => {
-        currentIndex = (currentIndex < slides.length - 1) ? currentIndex + 1 : 0;
-        updateSliderPosition();
+        if (currentIndex >= slides.length - 1) {
+            currentIndex = -1; // Jump to the first original slide
+            offset = 0; // Adjust for clone slide
+            slider.style.transition = 'none'; // Disable transition for jump
+            slider.style.transform = `translateX(${offset}%)`;
+            setTimeout(() => {
+                slider.style.transition = 'transform 0.5s ease'; // Re-enable transition
+                currentIndex++;
+                offset = -100 * currentIndex;
+                slider.style.transform = `translateX(${offset}%)`;
+            }, 50);
+        } else {
+            currentIndex++;
+            offset = -100 * (currentIndex + 1);
+            slider.style.transform = `translateX(${offset}%)`;
+        }
     });
-
-    function updateSliderPosition() {
-        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-    }
 </script>
 
 
