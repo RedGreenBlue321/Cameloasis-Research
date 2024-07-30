@@ -14,6 +14,62 @@
     <!-- Fonts/Icons -->
     <link href="all.css" rel="stylesheet">
     <link href="themify-icons.min.css" rel="stylesheet">
+
+    <title>滑动模块示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .slider-container {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        .slide img {
+            max-width: 40%;
+            height: auto;
+        }
+        .slide .text {
+            flex: 1;
+            padding-left: 20px;
+        }
+        .nav-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .nav-buttons button {
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+
+
+	
 </head>
 
 <body data-preloader="2">
@@ -217,7 +273,62 @@
 			</div>
 		<!-- end Community section 2-->
 
-		
+	
+
+<div class="slider-container">
+    <div class="slider">
+        <div class="slide">
+            <img src="https://via.placeholder.com/400x300" alt="Image 1">
+            <div class="text">
+                <h2>标题1</h2>
+                <p>这是第一个方框的文本内容。</p>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="https://via.placeholder.com/400x300" alt="Image 2">
+            <div class="text">
+                <h2>标题2</h2>
+                <p>这是第二个方框的文本内容。</p>
+            </div>
+        </div>
+        <div class="slide">
+            <img src="https://via.placeholder.com/400x300" alt="Image 3">
+            <div class="text">
+                <h2>标题3</h2>
+                <p>这是第三个方框的文本内容。</p>
+            </div>
+        </div>
+    </div>
+    <div class="nav-buttons">
+        <button id="prev">⬅️</button>
+        <button id="next">➡️</button>
+    </div>
+</div>
+
+<script>
+    const slider = document.querySelector('.slider');
+    const slides = document.querySelectorAll('.slide');
+    const prevButton = document.getElementById('prev');
+    const nextButton = document.getElementById('next');
+    let currentIndex = 0;
+
+    prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex > 0) ? currentIndex - 1 : slides.length - 1;
+        updateSliderPosition();
+    });
+
+    nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex < slides.length - 1) ? currentIndex + 1 : 0;
+        updateSliderPosition();
+    });
+
+    function updateSliderPosition() {
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+</script>
+
+
+	
 
 		<!-- case -->
 			<div class="container">
